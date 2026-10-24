@@ -1,0 +1,574 @@
+/* ==========================================================================
+   Online Voting System — design tokens
+   Civic registry: ink navy + parchment + brass seal, ledger-green / ballot-red
+   for status. Zilla Slab (headlines, engraved/stamped feel), Public Sans
+   (body — the US Web Design System's own civic-service typeface), IBM Plex
+   Mono (hashes, voter codes, timestamps — anything that's a literal record).
+   ========================================================================== */
+
+:root {
+    --ink: #10233F;
+    --ink-soft: #1B3357;
+    --ink-muted: #3E5170;
+    --paper: #F7F3E8;
+    --paper-dim: #EFE8D6;
+    --rule: #D9CFB8;
+    --brass: #A9812E;
+    --brass-bright: #C9A227;
+    --ledger-green: #2F5D4E;
+    --ledger-green-bg: #E6EEE9;
+    --ballot-red: #8C2F2B;
+    --ballot-red-bg: #F4E7E5;
+    --amber: #8A6D1F;
+    --amber-bg: #F3ECD9;
+
+    --font-display: 'Zilla Slab', 'Georgia', serif;
+    --font-body: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+
+    --radius-sm: 3px;
+    --radius-md: 4px;
+    --shadow-card: 0 1px 2px rgba(16, 35, 63, 0.06), 0 6px 20px -8px rgba(16, 35, 63, 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15.5px;
+    line-height: 1.55;
+}
+
+h1, h2, h3, h4, .display-6 {
+    font-family: var(--font-display);
+    color: var(--ink);
+    letter-spacing: -0.01em;
+}
+
+h1 { font-weight: 600; }
+
+a {
+    color: var(--ink-soft);
+    text-decoration-color: var(--rule);
+    text-underline-offset: 2px;
+}
+
+a:hover {
+    color: var(--brass);
+}
+
+code, .font-mono {
+    font-family: var(--font-mono);
+    color: var(--ink-soft);
+}
+
+code {
+    background: var(--paper-dim);
+    padding: 0.1em 0.4em;
+    border-radius: var(--radius-sm);
+    font-size: 0.86em;
+}
+
+:focus-visible {
+    outline: 2px solid var(--brass);
+    outline-offset: 2px;
+}
+
+.eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--brass);
+}
+
+/* --------------------------------------------------------------------------
+   Letterhead / navbar
+   -------------------------------------------------------------------------- */
+
+.navbar-ovs {
+    background: linear-gradient(180deg, var(--ink) 0%, var(--ink-soft) 100%);
+    border-bottom: 3px solid var(--brass);
+    padding-top: 0.85rem;
+    padding-bottom: 0.85rem;
+}
+
+.navbar-ovs .navbar-brand {
+    color: #fff !important;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    letter-spacing: 0.01em;
+    gap: 0.65rem;
+}
+
+.navbar-ovs .navbar-brand small {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+    font-weight: 400;
+}
+
+.navbar-ovs .nav-link {
+    color: rgba(255, 255, 255, 0.82) !important;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.75rem !important;
+    border-radius: var(--radius-sm);
+    transition: background-color 120ms ease, color 120ms ease;
+}
+
+.navbar-ovs .nav-link:hover {
+    color: #fff !important;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.navbar-ovs .nav-link.text-white-50 {
+    color: rgba(255, 255, 255, 0.55) !important;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+}
+
+/* seal mark */
+.ovs-seal__ring-outer,
+.ovs-seal__ring-inner {
+    fill: none;
+    stroke-width: 2;
+}
+.ovs-seal__tick { stroke-width: 2.5; }
+.ovs-seal__text {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 25px;
+}
+.ovs-seal--brass .ovs-seal__ring-outer,
+.ovs-seal--brass .ovs-seal__ring-inner,
+.ovs-seal--brass .ovs-seal__tick {
+    stroke: var(--brass-bright);
+}
+.ovs-seal--brass .ovs-seal__text { fill: var(--brass-bright); }
+
+.ovs-seal--navy .ovs-seal__ring-outer,
+.ovs-seal--navy .ovs-seal__ring-inner,
+.ovs-seal--navy .ovs-seal__tick {
+    stroke: var(--ink);
+}
+.ovs-seal--navy .ovs-seal__text { fill: var(--ink); }
+
+.ovs-seal__text { stroke-width: 0; }
+
+/* --------------------------------------------------------------------------
+   Cards — read as registry sheets, not shadowed SaaS panels
+   -------------------------------------------------------------------------- */
+
+.card-ovs {
+    background-color: #fff;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+}
+
+.card-ovs .card-header {
+    background-color: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    border-bottom: 2px solid var(--brass);
+    padding: 0.75rem 1.1rem;
+}
+
+.card-ovs .card-body {
+    padding: 1.35rem;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+
+.btn {
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: transform 120ms ease, box-shadow 120ms ease, background-color 120ms ease;
+}
+
+.btn-ovs {
+    background-color: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+}
+
+.btn-ovs:hover {
+    background-color: var(--ink-soft);
+    color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px -4px rgba(16, 35, 63, 0.4);
+}
+
+.btn-ovs:active { transform: translateY(0); }
+
+.btn-outline-secondary {
+    color: var(--ink-muted);
+    border-color: var(--rule);
+}
+.btn-outline-secondary:hover {
+    background-color: var(--paper-dim);
+    border-color: var(--ink-muted);
+    color: var(--ink);
+}
+
+.btn-outline-danger { color: var(--ballot-red); border-color: var(--ballot-red); }
+.btn-outline-danger:hover { background-color: var(--ballot-red); border-color: var(--ballot-red); }
+
+/* --------------------------------------------------------------------------
+   Forms
+   -------------------------------------------------------------------------- */
+
+.form-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink-soft);
+}
+
+.form-control, .form-select {
+    border-color: var(--rule);
+    border-radius: var(--radius-sm);
+    padding: 0.55rem 0.75rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--brass);
+    box-shadow: 0 0 0 3px rgba(169, 129, 46, 0.18);
+}
+
+/* --------------------------------------------------------------------------
+   Tables
+   -------------------------------------------------------------------------- */
+
+.table {
+    color: var(--ink);
+    font-size: 0.92rem;
+}
+
+.table thead th {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border-bottom: 2px solid var(--rule);
+    font-weight: 600;
+    background-color: var(--paper-dim);
+}
+
+.table td { border-color: var(--rule); vertical-align: middle; }
+.table-success { background-color: var(--ledger-green-bg) !important; }
+.table-danger { background-color: var(--ballot-red-bg) !important; }
+
+/* --------------------------------------------------------------------------
+   Status badges — printed-label look, not Bootstrap pill defaults
+   -------------------------------------------------------------------------- */
+
+.badge {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.32em 0.6em;
+    border-radius: var(--radius-sm);
+}
+
+.status-badge-open { background-color: var(--ledger-green-bg); color: var(--ledger-green); border: 1px solid var(--ledger-green); }
+.status-badge-upcoming { background-color: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber); }
+.status-badge-closed { background-color: var(--paper-dim); color: var(--ink-muted); border: 1px solid var(--rule); }
+
+/* --------------------------------------------------------------------------
+   Alerts
+   -------------------------------------------------------------------------- */
+
+.alert {
+    border-radius: var(--radius-md);
+    border-width: 1px;
+    font-size: 0.92rem;
+}
+.alert-success { background-color: var(--ledger-green-bg); border-color: var(--ledger-green); color: var(--ledger-green); }
+.alert-danger { background-color: var(--ballot-red-bg); border-color: var(--ballot-red); color: var(--ballot-red); }
+.alert-warning { background-color: var(--amber-bg); border-color: var(--amber); color: var(--amber); }
+
+/* --------------------------------------------------------------------------
+   Login — the letterhead portal
+   -------------------------------------------------------------------------- */
+
+.portal-wrap {
+    position: relative;
+    min-height: calc(100vh - 220px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.portal-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.5;
+    background-image:
+        repeating-radial-gradient(circle at 50% 50%, transparent 0, transparent 26px, rgba(16,35,63,0.028) 27px, transparent 28px);
+    background-size: 56px 56px;
+    background-position: center;
+}
+
+.portal-card {
+    position: relative;
+    z-index: 1;
+    animation: portal-rise 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes portal-rise {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.portal-seal {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.portal-title {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 0.1rem;
+}
+
+.portal-subtitle {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 1.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   Ballot — the actual paper
+   -------------------------------------------------------------------------- */
+
+.ballot-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-md);
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 0.6rem;
+    background: #fff;
+    cursor: pointer;
+    transition: border-color 120ms ease, background-color 120ms ease;
+}
+
+.ballot-row:hover { border-color: var(--brass); background-color: #FFFDF7; }
+
+.ballot-row input[type="radio"],
+.ballot-row input[type="checkbox"] {
+    appearance: none;
+    width: 1.35rem;
+    height: 1.35rem;
+    border: 2px solid var(--ink-muted);
+    margin-top: 0.15rem;
+    flex-shrink: 0;
+    cursor: pointer;
+    position: relative;
+    background: #fff;
+}
+.ballot-row input[type="radio"] { border-radius: 50%; }
+.ballot-row input[type="checkbox"] { border-radius: 3px; }
+
+.ballot-row input:checked {
+    border-color: var(--ledger-green);
+    background-color: var(--ledger-green);
+}
+.ballot-row input[type="radio"]:checked::after {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 50%;
+    background: var(--paper);
+}
+.ballot-row input[type="checkbox"]:checked::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 6px;
+    height: 11px;
+    border: solid var(--paper);
+    border-width: 0 2px 2px 0;
+    transform: rotate(40deg);
+}
+.ballot-row input:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.ballot-submit-rule {
+    border: none;
+    border-top: 2px dashed var(--rule);
+    margin: 1.5rem 0 1.25rem;
+    position: relative;
+}
+.ballot-submit-rule::before,
+.ballot-submit-rule::after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+}
+.ballot-submit-rule::before { left: -1.35rem; }
+.ballot-submit-rule::after { right: -1.35rem; }
+
+/* --------------------------------------------------------------------------
+   Receipt — the stamp
+   -------------------------------------------------------------------------- */
+
+.receipt-stamp-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 0.5rem 0 1.5rem;
+}
+
+.ovs-stamp {
+    width: 8.5rem;
+    height: 8.5rem;
+    transform: rotate(-9deg);
+    animation: stamp-hit 520ms cubic-bezier(0.2, 1.4, 0.5, 1) both;
+    animation-delay: 150ms;
+}
+
+@keyframes stamp-hit {
+    0% { opacity: 0; transform: rotate(-9deg) scale(1.9); }
+    60% { opacity: 1; }
+    100% { opacity: 1; transform: rotate(-9deg) scale(1); }
+}
+
+.ovs-stamp__ring-outer,
+.ovs-stamp__ring-inner,
+.ovs-stamp__check {
+    fill: none;
+    stroke: var(--ledger-green);
+}
+.ovs-stamp__ring-outer { stroke-width: 3; }
+.ovs-stamp__ring-inner { stroke-width: 1.5; }
+.ovs-stamp__check { stroke-width: 6; stroke-linecap: round; stroke-linejoin: round; }
+.ovs-stamp__text {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    fill: var(--ledger-green);
+}
+
+.receipt-field {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px dashed var(--rule);
+    font-size: 0.9rem;
+}
+.receipt-field:last-child { border-bottom: none; }
+.receipt-field dt { color: var(--ink-muted); font-weight: 500; }
+.receipt-field dd { margin: 0; font-family: var(--font-mono); text-align: right; word-break: break-all; }
+
+/* --------------------------------------------------------------------------
+   Ledger chain strip
+   -------------------------------------------------------------------------- */
+
+.chain-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding: 1rem;
+    background: var(--paper-dim);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-md);
+}
+
+.chain-block {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    padding: 0.4rem 0.55rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid;
+    min-width: 3.2rem;
+    text-align: center;
+}
+.chain-block.ok { background: var(--ledger-green-bg); border-color: var(--ledger-green); color: var(--ledger-green); }
+.chain-block.broken { background: var(--ballot-red-bg); border-color: var(--ballot-red); color: var(--ballot-red); }
+
+/* --------------------------------------------------------------------------
+   Dashboard stat tiles
+   -------------------------------------------------------------------------- */
+
+.stat-tile {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: var(--radius-md);
+    padding: 1.1rem 1.25rem;
+    border-bottom: 3px solid var(--brass);
+}
+.stat-tile .stat-number {
+    font-family: var(--font-mono);
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1;
+    color: #fff;
+}
+.stat-tile .stat-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(247, 243, 232, 0.65);
+    margin-top: 0.35rem;
+}
+.stat-tile a { color: var(--brass-bright); }
+
+/* --------------------------------------------------------------------------
+   Footer
+   -------------------------------------------------------------------------- */
+
+footer.ovs-footer {
+    background-color: var(--ink);
+    color: rgba(247, 243, 232, 0.6);
+    margin-top: 3rem;
+    padding: 1.5rem 0;
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+    border-top: 3px solid var(--brass);
+}
